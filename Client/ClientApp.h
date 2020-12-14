@@ -2,8 +2,13 @@
 
 #include "Application.h"
 #include "Renderer2D.h"
+#include "Client.h"
 
-class ClientApp : public aie::Application {
+using aie::Font;
+using aie::Renderer2D;
+
+class ClientApp : public aie::Application
+{
 public:
 
 	ClientApp();
@@ -17,6 +22,7 @@ public:
 
 protected:
 
-	aie::Renderer2D*	m_2dRenderer;
-	aie::Font*			m_font;
+	Renderer2D*	renderer;
+	Font* font;
+	Client* client;
 };
