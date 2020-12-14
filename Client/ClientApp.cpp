@@ -2,17 +2,18 @@
 #include "Texture.h"
 #include "Font.h"
 #include "Input.h"
+#include "Client.h"
 
-ClientApp::ClientApp() {
-
+ClientApp::ClientApp()
+{
 }
 
-ClientApp::~ClientApp() {
-
+ClientApp::~ClientApp()
+{
 }
 
-bool ClientApp::startup() {
-	
+bool ClientApp::startup()
+{
 	m_2dRenderer = new aie::Renderer2D();
 
 	// TODO: remember to change this when redistributing a build!
@@ -22,14 +23,14 @@ bool ClientApp::startup() {
 	return true;
 }
 
-void ClientApp::shutdown() {
-
+void ClientApp::shutdown()
+{
 	delete m_font;
 	delete m_2dRenderer;
 }
 
-void ClientApp::update(float deltaTime) {
-
+void ClientApp::update(float deltaTime)
+{
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
@@ -38,8 +39,8 @@ void ClientApp::update(float deltaTime) {
 		quit();
 }
 
-void ClientApp::draw() {
-
+void ClientApp::draw()
+{
 	// wipe the screen to the background colour
 	clearScreen();
 
