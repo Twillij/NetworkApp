@@ -13,11 +13,11 @@ ClientApp::~ClientApp()
 
 bool ClientApp::startup()
 {
-	renderer = new aie::Renderer2D();
+	renderer = new Renderer2D();
 
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
-	font = new aie::Font("../bin/font/consolas.ttf", 32);
+	font = new Font("../bin/font/consolas.ttf", 32);
 
 	client = new Client();
 
@@ -40,12 +40,18 @@ void ClientApp::shutdown()
 void ClientApp::update(float deltaTime)
 {
 	// input example
-	aie::Input* input = aie::Input::getInstance();
+	Input* input = Input::getInstance();
 
-	
+	if (input->isKeyDown(INPUT_KEY_SPACE))
+	{
+		int num = 420;
+		Packet packet;
+		packet.StoreData(num);
+		client->SendPacket(packet);
+	}
 
 	// exit the application
-	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+	if (input->isKeyDown(INPUT_KEY_ESCAPE))
 		quit();
 }
 

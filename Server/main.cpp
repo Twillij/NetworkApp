@@ -2,12 +2,14 @@
 #include <iostream>
 
 using std::cin;
+using std::cout;
+using std::endl;
 
 int main()
 {
 	Server server;
 	server.SetupListenSocket();
-	server.ListenToClients();
+	server.StartListeningThread();
 
 	bool online = true; // status of server
 
@@ -16,6 +18,7 @@ int main()
 		// if there is an unprocessed pocket
 		if (server.unprocessedPackets.size() > 0)
 		{
+			cout << "works" << endl;
 
 			// shutdown server
 			online = false;

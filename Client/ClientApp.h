@@ -4,8 +4,7 @@
 #include "Renderer2D.h"
 #include "Client.h"
 
-using aie::Font;
-using aie::Renderer2D;
+using namespace aie;
 
 class ClientApp : public aie::Application
 {
