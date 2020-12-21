@@ -167,10 +167,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClientApp.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientApp.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiplayerSupport\MultiplayerSupport.vcxproj">
