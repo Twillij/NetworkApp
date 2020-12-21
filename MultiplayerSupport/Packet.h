@@ -1,5 +1,5 @@
 #pragma once
-#define MAX_PACKET_SIZE 512
+#define MAX_DATA_SIZE 256
 #include <iostream>
 
 class Packet
@@ -10,7 +10,7 @@ public:
 	Packet(T& a_data) { StoreData(a_data); }
 	~Packet() {}
 
-	char dataType = '\0';
+	char dataType = '\0';	
 	int senderID = -1;
 
 	template <class T>
@@ -22,7 +22,7 @@ public:
 	void ClearData();
 
 private:
-	char data[MAX_PACKET_SIZE];
+	char data[MAX_DATA_SIZE];
 };
 
 template<class T>
