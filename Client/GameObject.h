@@ -21,6 +21,7 @@ public:
 
 	void LoadTexture(const char* filename);
 
+	vec3 GetLocation();
 	void SetLocation(vec3 location);
 
 	virtual void Update(float deltaTime) {}

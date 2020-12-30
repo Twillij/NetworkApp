@@ -20,6 +20,11 @@ void GameObject::LoadTexture(const char* filename)
 		texture = new Texture(filename);
 }
 
+vec3 GameObject::GetLocation()
+{
+	return globalTransform[2];
+}
+
 void GameObject::SetLocation(vec3 location)
 {
 	localTransform[2] = location;
