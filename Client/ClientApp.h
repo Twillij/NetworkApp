@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Renderer2D.h"
 #include "Client.h"
+#include "World.h"
 
 using namespace aie;
 
@@ -24,4 +25,6 @@ protected:
 	Renderer2D*	renderer;
 	Font* font;
 	Client* client;
+	vector<World*> worlds;
+	World* currentWorld = nullptr;
 };

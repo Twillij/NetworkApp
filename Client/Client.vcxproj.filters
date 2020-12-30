@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\GameObjects">
+      <UniqueIdentifier>{beea6530-f181-42d1-bbe3-acab72a02c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects">
+      <UniqueIdentifier>{7c5be467-b9ad-4cfe-b7e5-ae9691deb06d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Worlds">
+      <UniqueIdentifier>{448bd5ea-c0e5-4e82-bd73-75dfee4c9d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Worlds">
+      <UniqueIdentifier>{9a6b4025-a3e1-403a-a494-5f710ba0ee3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClientApp.cpp">
@@ -28,7 +40,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tank.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Arena.cpp">
+      <Filter>Source Files\Worlds</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +57,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tank.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Arena.h">
+      <Filter>Header Files\Worlds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

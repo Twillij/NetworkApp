@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "Font.h"
 #include "Input.h"
+#include "Arena.h"
 
 ClientApp::ClientApp()
 {
@@ -14,18 +15,16 @@ ClientApp::~ClientApp()
 bool ClientApp::startup()
 {
 	renderer = new Renderer2D();
+	font = new Font("./font/consolas.ttf", 32);
 
-	// TODO: remember to change this when redistributing a build!
-	// the following path would be used instead: "./font/consolas.ttf"
-	font = new Font("../bin/font/consolas.ttf", 32);
-
+	// client setup
 	client = new Client();
-
-	// connect client to server
 	client->ConnectToServer();
-
-	// start listening to the server on a different thread
 	client->StartServerThread();
+
+	// world setup
+	worlds.push_back(new Arena());
+	currentWorld = worlds[0];
 
 	return true;
 }
@@ -35,12 +34,17 @@ void ClientApp::shutdown()
 	delete font;
 	delete renderer;
 	delete client;
+
+	for (int i = 0; i < worlds.size(); ++i)
+		delete worlds[i];
 }
 
 void ClientApp::update(float deltaTime)
 {
 	// input example
 	Input* input = Input::getInstance();
+
+	currentWorld->Update(deltaTime);
 
 	if (input->isKeyDown(INPUT_KEY_SPACE))
 	{
@@ -64,7 +68,8 @@ void ClientApp::draw()
 	renderer->begin();
 
 	// draw your stuff here!
-	
+	currentWorld->Draw(renderer);
+
 	// output some text, uses the last used colour
 	renderer->drawText(font, "Press ESC to quit", 0, 0);
 

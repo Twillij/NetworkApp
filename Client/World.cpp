@@ -7,9 +7,11 @@ World::~World()
 		delete worldObjects[i];
 }
 
-void World::SpawnObject(GameObject* newObject)
+void World::SpawnObject(GameObject* newObject, vec3 location)
 {
 	newObject = (newObject) ? newObject : new GameObject(this);
+	
+
 	worldObjects.push_back(newObject);
 }
 

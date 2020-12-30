@@ -4,6 +4,6 @@
 class Tank : public GameObject
 {
 public:
-	Tank() {}
+	Tank();
 	~Tank() {}
 };
