@@ -9,7 +9,10 @@ class World
 {
 public:
 	World() {}
-	~World() {}
+	~World();
 
+	void SpawnObject();
+
+private:
 	vector<GameObject*> worldObjects;
 };

@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "World.h"
-#include <glm/vec3.hpp>
+#include <glm/ext.hpp>
 
 GameObject::GameObject(World* world)
 {
@@ -9,6 +9,5 @@ GameObject::GameObject(World* world)
 
 void GameObject::Draw(Renderer2D* renderer)
 {
-	//renderer->drawSpriteTransformed3x3()
-	
+	renderer->drawSpriteTransformed3x3(texture, &globalTransform[0][0]);
 }
