@@ -7,8 +7,20 @@ World::~World()
 		delete worldObjects[i];
 }
 
-void World::SpawnObject()
+void World::SpawnObject(GameObject* newObject)
 {
-	GameObject* newObject = new GameObject(this);
+	newObject = (newObject) ? newObject : new GameObject(this);
 	worldObjects.push_back(newObject);
+}
+
+void World::Update(float deltaTime)
+{
+	for (int i = 0; i < worldObjects.size(); ++i)
+		worldObjects[i]->Update(deltaTime);
+}
+
+void World::Draw(Renderer2D* renderer)
+{
+	for (int i = 0; i < worldObjects.size(); ++i)
+		worldObjects[i]->Draw(renderer);
 }
