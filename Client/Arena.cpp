@@ -3,6 +3,13 @@
 
 Arena::Arena()
 {
-	player = new Tank();
-	SpawnObject(player);
+}
+
+void Arena::JoinServer(Server* server)
+{
+	if (!server)
+	{
+		this->server = server;
+		GameObject* g = new Tank();
+	}
 }

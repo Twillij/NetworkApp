@@ -16,8 +16,10 @@ class GameObject
 {
 public:
 	GameObject() {}
-	GameObject(World* world);
-	~GameObject();
+	virtual ~GameObject();
+
+	World* GetWorld();
+	void SetWorld(World* world);
 
 	void LoadTexture(const char* filename);
 
@@ -28,6 +30,7 @@ public:
 	virtual void Draw(Renderer2D* renderer);
 
 private:
+	int objectID = -1;
 	mat3 globalTransform = mat3(1);
 	mat3 localTransform = mat3(1);
 	World* world = nullptr;

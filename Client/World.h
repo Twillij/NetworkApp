@@ -13,7 +13,7 @@ class World
 {
 public:
 	World() {}
-	~World();
+	virtual ~World();
 
 	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
 	void Update(float deltaTime);

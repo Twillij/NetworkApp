@@ -2,14 +2,19 @@
 #include "World.h"
 #include <glm/ext.hpp>
 
-GameObject::GameObject(World* world)
-{
-	this->world = world;
-}
-
 GameObject::~GameObject()
 {
 	delete texture;
+}
+
+World* GameObject::GetWorld()
+{
+	return world;
+}
+
+void GameObject::SetWorld(World* world)
+{
+	this->world = world;
 }
 
 void GameObject::LoadTexture(const char* filename)
