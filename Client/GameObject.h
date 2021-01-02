@@ -21,10 +21,10 @@ public:
 	World* GetWorld();
 	void SetWorld(World* world);
 
-	void LoadTexture(const char* filename);
-
 	vec3 GetLocation();
 	void SetLocation(vec3 location);
+
+	void LoadTexture(const char* filename);
 
 	virtual void Update(float deltaTime) {}
 	virtual void Draw(Renderer2D* renderer);

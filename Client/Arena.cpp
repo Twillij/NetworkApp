@@ -7,9 +7,9 @@ Arena::Arena()
 
 void Arena::JoinServer(Server* server)
 {
-	if (!server)
+	if (server)
 	{
 		this->server = server;
-		GameObject* g = new Tank();
+
 	}
 }

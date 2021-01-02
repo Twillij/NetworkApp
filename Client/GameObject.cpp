@@ -17,14 +17,6 @@ void GameObject::SetWorld(World* world)
 	this->world = world;
 }
 
-void GameObject::LoadTexture(const char* filename)
-{
-	if (texture)
-		texture->load(filename);
-	else
-		texture = new Texture(filename);
-}
-
 vec3 GameObject::GetLocation()
 {
 	return globalTransform[2];
@@ -33,6 +25,14 @@ vec3 GameObject::GetLocation()
 void GameObject::SetLocation(vec3 location)
 {
 	localTransform[2] = location;
+}
+
+void GameObject::LoadTexture(const char* filename)
+{
+	if (texture)
+		texture->load(filename);
+	else
+		texture = new Texture(filename);
 }
 
 void GameObject::Draw(Renderer2D* renderer)
