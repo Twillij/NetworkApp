@@ -2,33 +2,15 @@
 #include "Tank.h"
 #include <time.h>
 
-Arena::Arena()
-{
-}
-
 vec3 Arena::GetRandomLocation()
 {
 	vec3 location;
 
 	srand(time(NULL));
-	location.x = rand() % (int)borders.x;
-	location.y = rand() % (int)borders.y;
-	location.z = rand() % (int)borders.z;
+	
+	location.x = (borders.x > 0) ? rand() % (int)borders.x : 0;
+	location.y = (borders.y > 0) ? rand() % (int)borders.y : 0;
+	location.z = (borders.z > 0) ? rand() % (int)borders.z : 0;
 
 	return location;
-}
-
-void Arena::JoinServer()
-{
-	if (client)
-	{
-		player = new Tank();
-		SpawnObject(player, GetRandomLocation());
-
-		Packet packet;
-		packet.dataType = 't';
-		packet.StoreData(*player);
-
-		client->SendPacket(packet);
-	}
 }

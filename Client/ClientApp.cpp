@@ -16,14 +16,11 @@ bool ClientApp::startup()
 {
 	renderer = new Renderer2D();
 	font = new Font("./font/consolas.ttf", 32);
-
-	// client setup
-	client = new Client();
-	client->ConnectToServer();
-	client->StartServerThread();
 	
 	// world setup
-	worlds.push_back(new Arena());
+	Arena* arena = new Arena();
+	arena->JoinServer();
+	worlds.push_back(arena);
 	currentWorld = worlds[0];
 
 	return true;
@@ -43,7 +40,7 @@ void ClientApp::update(float deltaTime)
 {
 	// input example
 	Input* input = Input::getInstance();
-	
+
 	currentWorld->Update(deltaTime);
 
 	if (input->isKeyDown(INPUT_KEY_SPACE))

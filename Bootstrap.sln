@@ -13,6 +13,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiplayerSupport", "MultiplayerSupport\MultiplayerSupport.vcxproj", "{FCF8EE89-5F96-424A-ADDB-DF7A804CF421}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Server\Server.vcxproj", "{6C47F9D2-AB27-47B5-AAE5-0C0DA1E75AA4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF59BB0B-E059-4773-83DC-728A949647DA} = {AF59BB0B-E059-4773-83DC-728A949647DA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

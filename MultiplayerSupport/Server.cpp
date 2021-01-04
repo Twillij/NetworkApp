@@ -119,7 +119,7 @@ void Server::ListenToClients()
 				cout << "Pending packet from an existing client." << endl;
 				Packet newPacket;
 				ReceivePacket(current, newPacket);
-				//newPacket.senderID = current;
+				newPacket.senderID = current;
 			}
 		}
 	}

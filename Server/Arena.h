@@ -7,7 +7,7 @@ class Tank;
 class Arena : public World
 {
 public:
-	Arena();
+	Arena() {}
 	~Arena() {}
 
 	vec3 borders = { 1280, 720, 0 };
@@ -16,6 +16,4 @@ public:
 	Tank* player = nullptr;
 
 	vec3 GetRandomLocation();
-
-	void JoinServer();
 };

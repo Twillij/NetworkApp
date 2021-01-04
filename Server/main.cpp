@@ -1,5 +1,6 @@
 #include "Server.h"
 #include "Tank.h"
+#include "Arena.h"
 #include <iostream>
 
 using namespace std;
@@ -11,6 +12,7 @@ int main()
 	server.StartListeningThread();
 
 	bool online = true; // status of server
+	Arena arena;
 
 	while (online)
 	{
@@ -20,11 +22,28 @@ int main()
 			Packet currentPacket = server.unprocessedPackets[0];
 			char dataType = currentPacket.dataType;
 
-			if (dataType == 't')
+			if (dataType == 'I')
 			{
-				Tank tank;
-				currentPacket.ExtractData(tank);
-				
+				// request for ID
+				cout << "sender ID: " << currentPacket.senderID << endl;
+			}
+			else if (dataType == 't')
+			{
+				// spawn a new tank
+				Tank* tank = new Tank();
+				arena.SpawnObject(tank, arena.GetRandomLocation());
+
+				// send a packet containing the tank data
+				currentPacket.StoreData(*tank);
+				for (int i = 0; i < server.clients.fd_count; ++i)
+				{
+					server.SendPacket(server.clients.fd_array[i], currentPacket);
+				}
+			}
+			else if (dataType == 'x')
+			{
+				// shut down server
+				online = false;
 			}
 			else
 			{

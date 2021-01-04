@@ -7,8 +7,8 @@ class Tank;
 class Arena : public World
 {
 public:
-	Arena();
-	~Arena() {}
+	Arena() {}
+	virtual ~Arena();
 
 	vec3 borders = { 1280, 720, 0 };
 
@@ -18,4 +18,6 @@ public:
 	vec3 GetRandomLocation();
 
 	void JoinServer();
+
+	virtual void Update(float deltaTime);
 };

@@ -70,8 +70,10 @@ void Client::ConnectToServer()
 		break;
 	}
 
-	// free the resources returned by getaddrinfo and print an error message
+	// free the resources returned by getaddrinfo
 	freeaddrinfo(result);
+
+	// print an error message if the socket is invalid
 	if (connectSocket == INVALID_SOCKET)
 	{
 		cout << "Unable to connect to server!\n";
@@ -83,8 +85,7 @@ void Client::ListenToServer()
 {
 	while (true)
 	{
-		Packet packet;
-		ReceivePacket(packet);
+		ReceivePacket();
 	}
 }
 
@@ -114,8 +115,9 @@ bool Client::SendPacket(Packet& packet)
 	return true;
 }
 
-bool Client::ReceivePacket(Packet& packet)
+bool Client::ReceivePacket()
 {
+	Packet packet;
 	int iResult = recv(connectSocket, (char*)&packet, sizeof(Packet), 0);
 
 	if (iResult > 0)

@@ -27,14 +27,6 @@ void GameObject::SetLocation(vec3 location)
 	localTransform[2] = location;
 }
 
-void GameObject::LoadTexture(const char* filename)
-{
-	if (texture)
-		texture->load(filename);
-	else
-		texture = new Texture(filename);
-}
-
 void GameObject::Draw(Renderer2D* renderer)
 {
 	renderer->drawSpriteTransformed3x3(texture, &globalTransform[0][0]);

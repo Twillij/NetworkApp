@@ -7,7 +7,7 @@ class Packet
 public:
 	Packet();
 	template <class T>
-	Packet(T& a_data) { StoreData(a_data); }
+	Packet(char a_dataType, T& a_data);
 	~Packet() {}
 
 	char dataType = '\0';	
@@ -24,6 +24,13 @@ public:
 private:
 	char data[MAX_DATA_SIZE];
 };
+
+template<class T>
+Packet::Packet(char a_dataType, T& a_data)
+{
+	dataType = a_dataType;
+	StoreData(a_data);
+}
 
 template<class T>
 void Packet::StoreData(T& a_data)

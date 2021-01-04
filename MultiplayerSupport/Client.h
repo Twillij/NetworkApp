@@ -33,7 +33,7 @@ public:
 	void StartServerThread();
 
 	bool SendPacket(Packet& packet);
-	bool ReceivePacket(Packet& packet);
+	bool ReceivePacket();
 
 private:
 	addrinfo* result = NULL;
