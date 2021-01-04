@@ -63,8 +63,11 @@ void Arena::Update(float deltaTime)
 
 		if (currentPacket.dataType == 't')
 		{
-			Tank newTank;
-			currentPacket.ExtractData(newTank);
+			int test = 0;
+			currentPacket.ExtractData(test);
+			cout << "test: " << test << endl;
+			//Tank newTank;
+			//currentPacket.ExtractData(newTank);
 			//SpawnObject(&newTank, newTank.GetLocation());
 		}
 		else

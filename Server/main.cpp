@@ -32,9 +32,9 @@ int main()
 				// spawn a new tank
 				Tank* tank = new Tank();
 				arena.SpawnObject(tank, arena.GetRandomLocation());
-
+				int test = 420;
 				// send a packet containing the tank data
-				currentPacket.StoreData(*tank);
+				currentPacket.StoreData(test);
 				for (int i = 1; i < server.clients.fd_count; ++i)
 				{
 					server.SendPacket(server.clients.fd_array[i], currentPacket);
