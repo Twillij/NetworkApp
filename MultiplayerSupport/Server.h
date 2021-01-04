@@ -3,15 +3,12 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <iostream>
-#include <vector>
+#include <deque>
 #include <thread>
 
 #pragma comment(lib, "Ws2_32.lib")
 
-using std::cout;
-using std::endl;
-using std::vector;
-using std::thread;
+using namespace std;
 
 class Server
 {
@@ -25,7 +22,7 @@ public:
 	SOCKET listenSocket = INVALID_SOCKET;
 	unsigned int maxClients = INT_MAX;
 
-	vector<Packet> unprocessedPackets;
+	deque<Packet> unprocessedPackets;
 
 	///<summary>Initializes winsock.
 	///Returns true if initialization succeeds, or false otherwise.</summary>

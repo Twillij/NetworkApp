@@ -4,7 +4,7 @@
 #include <WS2tcpip.h>
 #include <stdio.h>
 #include <iostream>
-#include <vector>
+#include <deque>
 #include <thread>
 
 #pragma comment(lib, "Ws2_32.lib")
@@ -22,7 +22,7 @@ public:
 
 	SOCKET connectSocket = INVALID_SOCKET;
 
-	vector<Packet> unprocessedPackets;
+	deque<Packet> unprocessedPackets;
 
 	///<summary>Initializes winsock.
 	///Returns true if initialization succeeds, or false otherwise.</summary>

@@ -35,7 +35,7 @@ int main()
 
 				// send a packet containing the tank data
 				currentPacket.StoreData(*tank);
-				for (int i = 0; i < server.clients.fd_count; ++i)
+				for (int i = 1; i < server.clients.fd_count; ++i)
 				{
 					server.SendPacket(server.clients.fd_array[i], currentPacket);
 				}
@@ -50,7 +50,7 @@ int main()
 				cout << "Invalid data type" << endl;
 			}
 
-			server.unprocessedPackets.erase(server.unprocessedPackets.begin());
+			server.unprocessedPackets.pop_front();
 		}
 	}
 

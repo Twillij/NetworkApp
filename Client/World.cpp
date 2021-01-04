@@ -1,5 +1,6 @@
 #include "World.h"
 #include "GameObject.h"
+#include <iostream>
 
 World::~World()
 {

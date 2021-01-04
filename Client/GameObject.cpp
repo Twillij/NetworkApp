@@ -25,6 +25,7 @@ vec3 GameObject::GetLocation()
 void GameObject::SetLocation(vec3 location)
 {
 	localTransform[2] = location;
+	UpdateTransform();
 }
 
 void GameObject::LoadTexture(const char* filename)
