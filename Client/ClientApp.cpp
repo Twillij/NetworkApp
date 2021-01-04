@@ -21,7 +21,7 @@ bool ClientApp::startup()
 	client = new Client();
 	client->ConnectToServer();
 	client->StartServerThread();
-
+	
 	// world setup
 	worlds.push_back(new Arena());
 	currentWorld = worlds[0];
@@ -43,7 +43,7 @@ void ClientApp::update(float deltaTime)
 {
 	// input example
 	Input* input = Input::getInstance();
-
+	
 	currentWorld->Update(deltaTime);
 
 	if (input->isKeyDown(INPUT_KEY_SPACE))
@@ -53,7 +53,7 @@ void ClientApp::update(float deltaTime)
 		packet.StoreData(num);
 		client->SendPacket(packet);
 	}
-
+	
 	// exit the application
 	if (input->isKeyDown(INPUT_KEY_ESCAPE))
 		quit();

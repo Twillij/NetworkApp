@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "Tank.h"
 #include <iostream>
 
 using namespace std;
@@ -16,10 +17,21 @@ int main()
 		// if there is an unprocessed pocket
 		if (server.unprocessedPackets.size() > 0)
 		{
-			cout << "works" << endl;
+			Packet currentPacket = server.unprocessedPackets[0];
+			char dataType = currentPacket.dataType;
 
-			// shutdown server
-			online = false;
+			if (dataType == 't')
+			{
+				Tank tank;
+				currentPacket.ExtractData(tank);
+				
+			}
+			else
+			{
+				cout << "Invalid data type" << endl;
+			}
+
+			server.unprocessedPackets.erase(server.unprocessedPackets.begin());
 		}
 	}
 

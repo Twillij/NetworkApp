@@ -11,7 +11,6 @@ void World::SpawnObject(GameObject* newObject, vec3 location)
 {
 	newObject = (newObject) ? newObject : new GameObject();
 	newObject->SetWorld(this);
-	newObject->SetLocation(location);
 
 	worldObjects.push_back(newObject);
 }
