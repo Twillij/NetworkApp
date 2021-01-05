@@ -2,5 +2,5 @@
 
 Tank::Tank()
 {
-	
+	LoadTexture("./textures/tankGreen.png");
 }

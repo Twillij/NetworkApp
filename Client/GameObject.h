@@ -18,8 +18,14 @@ public:
 	GameObject() {}
 	virtual ~GameObject();
 
+	unsigned int GetObjectID();
+	void SetObjectID(unsigned int id);
+
 	World* GetWorld();
 	void SetWorld(World* world);
+
+	mat3 GetTransform();
+	void SetTransform(mat3 transform);
 
 	vec3 GetLocation();
 	void SetLocation(vec3 location);
@@ -30,7 +36,7 @@ public:
 	virtual void Draw(Renderer2D* renderer);
 
 private:
-	int objectID = -1;
+	unsigned int objectID = 0;
 	mat3 globalTransform = mat3(1);
 	mat3 localTransform = mat3(1);
 	World* world = nullptr;

@@ -30,7 +30,7 @@ void Arena::JoinServer()
 
 		// request to create new tank
 		Packet packet;
-		packet.dataType = 't';
+		packet.dataType = 'T';
 		client->SendPacket(packet);
 	}
 }
@@ -61,14 +61,21 @@ void Arena::Update(float deltaTime)
 		cout << "processing packet" << endl;
 		Packet currentPacket = client->unprocessedPackets[0];
 
-		if (currentPacket.dataType == 't')
+		if (currentPacket.dataType == 'T')
 		{
-			int test = 0;
-			currentPacket.ExtractData(test);
-			cout << "test: " << test << endl;
-			//Tank newTank;
-			//currentPacket.ExtractData(newTank);
-			//SpawnObject(&newTank, newTank.GetLocation());
+			Tank* newTank = new Tank();
+			player = (player) ? player : newTank;
+			newTank->SetObjectID(currentPacket.objectID);
+			SpawnObject(newTank);
+		}
+		else if (currentPacket.dataType == 't')
+		{
+			mat3 transform;
+			currentPacket.ExtractData(transform);
+			GameObject* targetObject = GetWorldObject(currentPacket.objectID);
+
+			if (targetObject)
+				targetObject->SetTransform(transform);
 		}
 		else
 		{

@@ -11,7 +11,8 @@ public:
 	~Packet() {}
 
 	char dataType = '\0';	
-	int senderID = -1;
+	unsigned int senderID = 0;
+	unsigned int objectID = 0;
 
 	template <class T>
 	void StoreData(T& a_data);

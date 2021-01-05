@@ -18,8 +18,14 @@ public:
 	GameObject() {}
 	virtual ~GameObject();
 
+	unsigned int GetObjectID();
+	void SetObjectID(unsigned int id);
+
 	World* GetWorld();
 	void SetWorld(World* world);
+
+	mat3 GetTransform();
+	void SetTransform(mat3 transform);
 
 	vec3 GetLocation();
 	void SetLocation(vec3 location);

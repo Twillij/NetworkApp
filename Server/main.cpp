@@ -13,6 +13,7 @@ int main()
 
 	bool online = true; // status of server
 	Arena arena;
+	unsigned int objectID = 0;
 
 	while (online)
 	{
@@ -27,17 +28,28 @@ int main()
 				// request for ID
 				cout << "sender ID: " << currentPacket.senderID << endl;
 			}
-			else if (dataType == 't')
+			else if (dataType == 'T')
 			{
 				// spawn a new tank
-				Tank* tank = new Tank();
-				arena.SpawnObject(tank, arena.GetRandomLocation());
-				int test = 420;
-				// send a packet containing the tank data
-				currentPacket.StoreData(test);
+				Tank* newTank = new Tank();
+				newTank->SetObjectID(objectID);
+				arena.SpawnObject(newTank, arena.GetRandomLocation());
+
+				Packet spawnCommand;
+				spawnCommand.dataType = 'T';
+				spawnCommand.objectID = objectID++;
+
+				Packet setTransform;
+				setTransform.dataType = 't';
+				setTransform.objectID = spawnCommand.objectID;
+				mat3 transform = newTank->GetTransform();
+				setTransform.StoreData(transform);
+
+				// send packets containing the tank data
 				for (int i = 1; i < server.clients.fd_count; ++i)
 				{
-					server.SendPacket(server.clients.fd_array[i], currentPacket);
+					server.SendPacket(server.clients.fd_array[i], spawnCommand);
+					server.SendPacket(server.clients.fd_array[i], setTransform);
 				}
 			}
 			else if (dataType == 'x')

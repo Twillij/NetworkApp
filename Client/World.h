@@ -17,6 +17,8 @@ public:
 
 	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
 
+	GameObject* GetWorldObject(unsigned int id);
+
 	virtual void Update(float deltaTime);
 	virtual void Draw(Renderer2D* renderer);
 

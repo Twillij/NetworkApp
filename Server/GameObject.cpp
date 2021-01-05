@@ -7,6 +7,16 @@ GameObject::~GameObject()
 	delete texture;
 }
 
+unsigned int GameObject::GetObjectID()
+{
+	return objectID;
+}
+
+void GameObject::SetObjectID(unsigned int id)
+{
+	objectID = id;
+}
+
 World* GameObject::GetWorld()
 {
 	return world;
@@ -16,6 +26,18 @@ void GameObject::SetWorld(World* world)
 {
 	this->world = world;
 }
+
+mat3 GameObject::GetTransform()
+{
+	return globalTransform;
+}
+
+void GameObject::SetTransform(mat3 transform)
+{
+	localTransform = transform;
+	UpdateTransform();
+}
+
 
 vec3 GameObject::GetLocation()
 {
