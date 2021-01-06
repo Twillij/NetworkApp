@@ -37,26 +37,7 @@ void Arena::JoinServer()
 
 void Arena::Update(float deltaTime)
 {
-	// if there is an unprocessed pocket
-	//while (client->unprocessedPackets.size() > 0)
-	//{
-	//	Packet currentPacket = client->unprocessedPackets[0];
-
-	//	if (currentPacket.dataType == 't')
-	//	{
-	//		Tank newTank;
-	//		currentPacket.ExtractData(newTank);
-	//		SpawnObject(&newTank, newTank.GetLocation());
-	//	}
-	//	else
-	//	{
-	//		cout << "Invalid data type" << endl;
-	//	}
-
-	//	client->unprocessedPackets.pop_front();
-	//}
-	
-	if (client->unprocessedPackets.size() > 0)
+	while (client->unprocessedPackets.size() > 0)
 	{
 		cout << "processing packet" << endl;
 		Packet currentPacket = client->unprocessedPackets[0];
@@ -64,7 +45,13 @@ void Arena::Update(float deltaTime)
 		if (currentPacket.dataType == 'T')
 		{
 			Tank* newTank = new Tank();
-			player = (player) ? player : newTank;
+			
+			if (!player)
+			{
+				player = newTank;
+				newTank->isPlayerControlled = true;
+			}
+
 			newTank->SetObjectID(currentPacket.objectID);
 			SpawnObject(newTank);
 		}

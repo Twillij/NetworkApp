@@ -30,7 +30,7 @@ void ClientApp::shutdown()
 {
 	delete font;
 	delete renderer;
-	delete client;
+	//delete client;
 
 	for (int i = 0; i < worlds.size(); ++i)
 		delete worlds[i];
@@ -38,7 +38,6 @@ void ClientApp::shutdown()
 
 void ClientApp::update(float deltaTime)
 {
-	// input example
 	Input* input = Input::getInstance();
 
 	currentWorld->Update(deltaTime);
