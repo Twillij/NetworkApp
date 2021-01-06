@@ -9,7 +9,7 @@ public:
 
 	bool isPlayerControlled = false;
 
-	float moveSpeed = 1000;
+	float moveSpeed = 100;
 
 	virtual void Update(float deltaTime);
 };
