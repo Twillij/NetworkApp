@@ -16,8 +16,11 @@ public:
 	virtual ~World();
 
 	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
-	void Update(float deltaTime);
-	void Draw(Renderer2D* renderer);
+
+	GameObject* GetWorldObject(unsigned int id);
+
+	virtual void Update(float deltaTime);
+	virtual void Draw(Renderer2D* renderer);
 
 private:
 	vector<GameObject*> worldObjects;

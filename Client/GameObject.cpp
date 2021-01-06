@@ -1,10 +1,13 @@
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include "GameObject.h"
 #include "World.h"
-#include <glm/ext.hpp>
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 GameObject::~GameObject()
 {
-	delete texture;
+	if (texture)
+		delete texture;
 }
 
 unsigned int GameObject::GetObjectID()
@@ -17,6 +20,16 @@ void GameObject::SetObjectID(unsigned int id)
 	objectID = id;
 }
 
+Client* GameObject::GetClient()
+{
+	return client;
+}
+
+void GameObject::SetClient(Client* client)
+{
+	this->client = client;
+}
+
 World* GameObject::GetWorld()
 {
 	return world;
@@ -27,15 +40,25 @@ void GameObject::SetWorld(World* world)
 	this->world = world;
 }
 
-mat3 GameObject::GetTransform()
+mat3 GameObject::GetLocalTransform()
+{
+	return localTransform;
+}
+
+void GameObject::SetLocalTransform(mat3 transform)
+{
+	localTransform = transform;
+	UpdateTransform();
+}
+
+mat3 GameObject::GetGlobalTransform()
 {
 	return globalTransform;
 }
 
-void GameObject::SetTransform(mat3 transform)
+vec3 GameObject::GetForward()
 {
-	localTransform = transform;
-	UpdateTransform();
+	return globalTransform[1];
 }
 
 vec3 GameObject::GetLocation()
@@ -55,6 +78,12 @@ void GameObject::LoadTexture(const char* filename)
 		texture->load(filename);
 	else
 		texture = new Texture(filename);
+}
+
+void GameObject::Translate(vec3 translation)
+{
+	localTransform = translate(localTransform, vec2(translation));
+	UpdateTransform();
 }
 
 void GameObject::Draw(Renderer2D* renderer)

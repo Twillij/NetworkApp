@@ -34,6 +34,7 @@ int main()
 				Tank* newTank = new Tank();
 				newTank->SetObjectID(objectID);
 				arena.SpawnObject(newTank, arena.GetRandomLocation());
+				mat3 transform = newTank->GetLocalTransform();
 
 				Packet spawnCommand;
 				spawnCommand.dataType = 'T';
@@ -42,7 +43,6 @@ int main()
 				Packet setTransform;
 				setTransform.dataType = 't';
 				setTransform.objectID = spawnCommand.objectID;
-				mat3 transform = newTank->GetTransform();
 				setTransform.StoreData(transform);
 
 				// send packets containing the tank data
@@ -50,6 +50,32 @@ int main()
 				{
 					server.SendPacket(server.clients.fd_array[i], spawnCommand);
 					server.SendPacket(server.clients.fd_array[i], setTransform);
+				}
+			}
+			else if (dataType == 'w' || dataType == 's')
+			{
+				// move a tank forward
+				Tank* tank = dynamic_cast<Tank*>(arena.GetWorldObject(currentPacket.objectID));
+
+				if (tank)
+				{
+					vec3 translation;
+					currentPacket.ExtractData(translation);
+					tank->Translate(translation);
+					mat3 transform = tank->GetLocalTransform();
+
+					Packet setTransform;
+					setTransform.dataType = 't';
+					setTransform.objectID = currentPacket.objectID;
+					setTransform.StoreData(transform);
+					
+					std::cout << "location:" << transform[2].x << ", " << transform[2].y << ", " << transform[2].z << std::endl;
+
+					// send packets containing the tank data
+					for (int i = 1; i < server.clients.fd_count; ++i)
+					{
+						server.SendPacket(server.clients.fd_array[i], setTransform);
+					}
 				}
 			}
 			else if (dataType == 'x')

@@ -1,4 +1,5 @@
 #pragma once
+#include "Client.h"
 #include <vector>
 #include <Renderer2D.h>
 #include <Texture.h>
@@ -21,24 +22,33 @@ public:
 	unsigned int GetObjectID();
 	void SetObjectID(unsigned int id);
 
+	Client* GetClient();
+	void SetClient(Client* client);
+
 	World* GetWorld();
 	void SetWorld(World* world);
 
-	mat3 GetTransform();
-	void SetTransform(mat3 transform);
+	mat3 GetLocalTransform();
+	void SetLocalTransform(mat3 transform);
+
+	mat3 GetGlobalTransform();
+
+	vec3 GetForward();
 
 	vec3 GetLocation();
 	void SetLocation(vec3 location);
 
 	void LoadTexture(const char* filename);
+	void Translate(vec3 translation);
 
 	virtual void Update(float deltaTime) {}
 	virtual void Draw(Renderer2D* renderer);
 
 private:
-	int objectID = -1;
+	unsigned int objectID = 0;
 	mat3 globalTransform = mat3(1);
 	mat3 localTransform = mat3(1);
+	Client* client = nullptr;
 	World* world = nullptr;
 	Texture* texture = nullptr;
 	GameObject* parent = nullptr;

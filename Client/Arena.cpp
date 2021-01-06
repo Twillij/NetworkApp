@@ -4,7 +4,8 @@
 
 Arena::~Arena()
 {
-	delete client;
+	if (client)
+		delete client;
 }
 
 vec3 Arena::GetRandomLocation()
@@ -12,9 +13,9 @@ vec3 Arena::GetRandomLocation()
 	vec3 location;
 
 	srand(time(NULL));
-	location.x = rand() % (int)borders.x;
-	location.y = rand() % (int)borders.y;
-	location.z = rand() % (int)borders.z;
+	location.x = (borders.x) ? rand() % (int)borders.x : 0;
+	location.y = (borders.y) ? rand() % (int)borders.y : 0;
+	location.z = (borders.z) ? rand() % (int)borders.z : 0;
 
 	return location;
 }
@@ -39,7 +40,6 @@ void Arena::Update(float deltaTime)
 {
 	while (client->unprocessedPackets.size() > 0)
 	{
-		cout << "processing packet" << endl;
 		Packet currentPacket = client->unprocessedPackets[0];
 
 		if (currentPacket.dataType == 'T')
@@ -51,8 +51,9 @@ void Arena::Update(float deltaTime)
 				player = newTank;
 				newTank->isPlayerControlled = true;
 			}
-
+			
 			newTank->SetObjectID(currentPacket.objectID);
+			newTank->SetClient(client);
 			SpawnObject(newTank);
 		}
 		else if (currentPacket.dataType == 't')
@@ -62,7 +63,7 @@ void Arena::Update(float deltaTime)
 			GameObject* targetObject = GetWorldObject(currentPacket.objectID);
 
 			if (targetObject)
-				targetObject->SetTransform(transform);
+				targetObject->SetLocalTransform(transform);
 		}
 		else
 		{

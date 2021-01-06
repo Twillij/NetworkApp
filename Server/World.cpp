@@ -1,5 +1,6 @@
 #include "World.h"
 #include "GameObject.h"
+#include <iostream>
 
 World::~World()
 {
@@ -14,6 +15,15 @@ void World::SpawnObject(GameObject* newObject, vec3 location)
 	newObject->SetLocation(location);
 
 	worldObjects.push_back(newObject);
+}
+
+GameObject* World::GetWorldObject(unsigned int id)
+{
+	for (int i = 0; i < worldObjects.size(); ++i)
+		if (worldObjects[i]->GetObjectID() == id)
+			return worldObjects[i];
+
+	return nullptr;
 }
 
 void World::Update(float deltaTime)
