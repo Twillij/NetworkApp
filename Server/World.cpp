@@ -30,11 +30,9 @@ GameObject* World::GetWorldObject(unsigned int id)
 vector<GameObject*> World::GetAllObjectsOfType(const type_info& objectType)
 {
 	vector<GameObject*> result;
-	cout << "checktype: " << objectType.name() << endl;
 
 	for (int i = 0; i < worldObjects.size(); ++i)
 	{
-		cout << "currenttype: " << typeid(*worldObjects[i]).name() << endl;
 		if (typeid(*worldObjects[i]) == objectType)
 		{
 			result.push_back(worldObjects[i]);

@@ -21,27 +21,28 @@ int main()
 		if (server.unprocessedPackets.size() > 0)
 		{
 			Packet currentPacket = server.unprocessedPackets[0];
+			SOCKET sender = server.GetSocket(currentPacket.senderID);
 			char dataType = currentPacket.dataType;
 
 			// update the client that is trying to join the server
 			if (dataType == 'J')
 			{
-				SOCKET sender = server.GetSocket(currentPacket.senderID);
+				
 				vector<GameObject*> tanks = arena.GetAllObjectsOfType(typeid(Tank));
 
 				for (int i = 0; i < tanks.size(); ++i)
 				{
-					Packet spawnCommand;
-					spawnCommand.dataType = 'T';
-					spawnCommand.objectID = tanks[i]->GetObjectID();
+					Packet spawnObject;
+					spawnObject.dataType = 'T';
+					spawnObject.objectID = tanks[i]->GetObjectID();
 
 					Packet setTransform;
 					setTransform.dataType = 't';
-					setTransform.objectID = spawnCommand.objectID;
+					setTransform.objectID = spawnObject.objectID;
 					mat3 transform = tanks[i]->GetLocalTransform();
 					setTransform.StoreData(transform);
 
-					server.SendPacket(sender, spawnCommand);
+					server.SendPacket(sender, spawnObject);
 					server.SendPacket(sender, setTransform);
 				}
 			}
@@ -53,21 +54,30 @@ int main()
 				arena.SpawnObject(newTank, arena.GetRandomLocation());
 				mat3 transform = newTank->GetLocalTransform();
 
-				Packet spawnCommand;
-				spawnCommand.dataType = 'T';
-				spawnCommand.objectID = objectID++;
-				//bool isPlayerControllable = true;
-				//spawnCommand.StoreData(isPlayerControllable);
+				Packet spawnTank;
+				spawnTank.dataType = 'T';
+				spawnTank.objectID = objectID++;
 
 				Packet setTransform;
 				setTransform.dataType = 't';
-				setTransform.objectID = spawnCommand.objectID;
+				setTransform.objectID = spawnTank.objectID;
 				setTransform.StoreData(transform);
 
 				// send packets containing the tank data
 				for (int i = 1; i < server.clients.fd_count; ++i)
 				{
-					server.SendPacket(server.clients.fd_array[i], spawnCommand);
+					if (server.clients.fd_array[i] == sender)
+					{
+						Packet spawnPlayer = spawnTank;
+						bool isPlayerControllable = true;
+						spawnPlayer.StoreData(isPlayerControllable);
+						server.SendPacket(sender, spawnPlayer);
+					}
+					else
+					{
+						server.SendPacket(server.clients.fd_array[i], spawnTank);
+					}
+					
 					server.SendPacket(server.clients.fd_array[i], setTransform);
 				}
 			}
@@ -87,8 +97,6 @@ int main()
 					setTransform.dataType = 't';
 					setTransform.objectID = currentPacket.objectID;
 					setTransform.StoreData(transform);
-					
-					std::cout << "location:" << transform[2].x << ", " << transform[2].y << ", " << transform[2].z << std::endl;
 
 					// send packets containing the tank data
 					for (int i = 1; i < server.clients.fd_count; ++i)
