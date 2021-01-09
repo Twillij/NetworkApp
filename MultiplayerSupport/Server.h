@@ -33,6 +33,8 @@ public:
 	void StartListeningThread();
 	void HandleNewClient(SOCKET newClient);
 
+	SOCKET GetSocket(unsigned int socketID);
+
 	bool SendPacket(SOCKET& recipient, Packet& packet);
 	bool ReceivePacket(SOCKET& sender, Packet& packet);
 

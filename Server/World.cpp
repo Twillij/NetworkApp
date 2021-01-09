@@ -8,13 +8,14 @@ World::~World()
 		delete worldObjects[i];
 }
 
-void World::SpawnObject(GameObject* newObject, vec3 location)
+int World::GetObjectCount()
 {
-	newObject = (newObject) ? newObject : new GameObject();
-	newObject->SetWorld(this);
-	newObject->SetLocation(location);
+	return worldObjects.size();
+}
 
-	worldObjects.push_back(newObject);
+GameObject* World::GetObjectList()
+{
+	return worldObjects[0];
 }
 
 GameObject* World::GetWorldObject(unsigned int id)
@@ -24,6 +25,32 @@ GameObject* World::GetWorldObject(unsigned int id)
 			return worldObjects[i];
 
 	return nullptr;
+}
+
+vector<GameObject*> World::GetAllObjectsOfType(const type_info& objectType)
+{
+	vector<GameObject*> result;
+	cout << "checktype: " << objectType.name() << endl;
+
+	for (int i = 0; i < worldObjects.size(); ++i)
+	{
+		cout << "currenttype: " << typeid(*worldObjects[i]).name() << endl;
+		if (typeid(*worldObjects[i]) == objectType)
+		{
+			result.push_back(worldObjects[i]);
+		}
+	}
+
+	return result;
+}
+
+void World::SpawnObject(GameObject* newObject, vec3 location)
+{
+	newObject = (newObject) ? newObject : new GameObject();
+	newObject->SetWorld(this);
+	newObject->SetLocation(location);
+
+	worldObjects.push_back(newObject);
 }
 
 void World::Update(float deltaTime)

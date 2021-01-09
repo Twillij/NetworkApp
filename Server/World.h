@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <typeinfo>
 #include <Renderer2D.h>
 #include <glm/vec3.hpp>
 
@@ -15,9 +16,12 @@ public:
 	World() {}
 	virtual ~World();
 
-	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
-
+	int GetObjectCount();
+	GameObject* GetObjectList();
 	GameObject* GetWorldObject(unsigned int id);
+	vector<GameObject*> GetAllObjectsOfType(const type_info& objectType);
+
+	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
 
 	virtual void Update(float deltaTime);
 	virtual void Draw(Renderer2D* renderer);

@@ -151,6 +151,19 @@ void Server::HandleNewClient(SOCKET newClient)
 	cout << "New client connection established." << endl;
 }
 
+SOCKET Server::GetSocket(unsigned int socketID)
+{
+	for (int i = 0; i < clients.fd_count; ++i)
+	{
+		if (clients.fd_array[i] == socketID)
+		{
+			return clients.fd_array[i];
+		}
+	}
+
+	return INVALID_SOCKET;
+}
+
 bool Server::SendPacket(SOCKET& recipient, Packet& packet)
 {
 	int iResult = send(recipient, (char*)&packet, sizeof(Packet), 0);

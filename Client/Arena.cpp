@@ -29,10 +29,15 @@ void Arena::JoinServer()
 		client->ConnectToServer();
 		client->StartServerThread();
 
+		// request to join server
+		Packet joinServer;
+		joinServer.dataType = 'J';
+		client->SendPacket(joinServer);
+
 		// request to create new tank
-		Packet packet;
-		packet.dataType = 'T';
-		client->SendPacket(packet);
+		Packet createTank;
+		createTank.dataType = 'T';
+		client->SendPacket(createTank);
 	}
 }
 
@@ -45,11 +50,11 @@ void Arena::Update(float deltaTime)
 		if (currentPacket.dataType == 'T')
 		{
 			Tank* newTank = new Tank();
-			
-			if (!player)
+			currentPacket.ExtractData(newTank->isPlayerControlled);
+
+			if (!player && newTank->isPlayerControlled)
 			{
 				player = newTank;
-				newTank->isPlayerControlled = true;
 			}
 			
 			newTank->SetObjectID(currentPacket.objectID);

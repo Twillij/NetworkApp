@@ -23,14 +23,31 @@ int main()
 			Packet currentPacket = server.unprocessedPackets[0];
 			char dataType = currentPacket.dataType;
 
-			if (dataType == 'I')
+			// update the client that is trying to join the server
+			if (dataType == 'J')
 			{
-				// request for ID
-				cout << "sender ID: " << currentPacket.senderID << endl;
+				SOCKET sender = server.GetSocket(currentPacket.senderID);
+				vector<GameObject*> tanks = arena.GetAllObjectsOfType(typeid(Tank));
+
+				for (int i = 0; i < tanks.size(); ++i)
+				{
+					Packet spawnCommand;
+					spawnCommand.dataType = 'T';
+					spawnCommand.objectID = tanks[i]->GetObjectID();
+
+					Packet setTransform;
+					setTransform.dataType = 't';
+					setTransform.objectID = spawnCommand.objectID;
+					mat3 transform = tanks[i]->GetLocalTransform();
+					setTransform.StoreData(transform);
+
+					server.SendPacket(sender, spawnCommand);
+					server.SendPacket(sender, setTransform);
+				}
 			}
+			// spawn a new tank
 			else if (dataType == 'T')
 			{
-				// spawn a new tank
 				Tank* newTank = new Tank();
 				newTank->SetObjectID(objectID);
 				arena.SpawnObject(newTank, arena.GetRandomLocation());
@@ -39,6 +56,8 @@ int main()
 				Packet spawnCommand;
 				spawnCommand.dataType = 'T';
 				spawnCommand.objectID = objectID++;
+				//bool isPlayerControllable = true;
+				//spawnCommand.StoreData(isPlayerControllable);
 
 				Packet setTransform;
 				setTransform.dataType = 't';
@@ -52,9 +71,9 @@ int main()
 					server.SendPacket(server.clients.fd_array[i], setTransform);
 				}
 			}
+			// move a tank forward or backward
 			else if (dataType == 'w' || dataType == 's')
 			{
-				// move a tank forward
 				Tank* tank = dynamic_cast<Tank*>(arena.GetWorldObject(currentPacket.objectID));
 
 				if (tank)
@@ -78,9 +97,9 @@ int main()
 					}
 				}
 			}
+			// shut down server
 			else if (dataType == 'x')
 			{
-				// shut down server
 				online = false;
 			}
 			else
