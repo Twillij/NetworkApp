@@ -1,13 +1,12 @@
 #pragma once
 #include "World.h"
 #include "Client.h"
-
-class Tank;
+#include "Tank.h"
 
 class Arena : public World
 {
 public:
-	Arena() {}
+	Arena();
 	virtual ~Arena();
 
 	vec3 borders = { 1280, 720, 0 };
@@ -16,8 +15,12 @@ public:
 	Tank* player = nullptr;
 
 	vec3 GetRandomLocation();
+	Tank::Colour GetRandomTankColour(bool removeColour = false);
 
 	void JoinServer();
 
 	virtual void Update(float deltaTime);
+
+private:
+	vector<Tank::Colour> availableTanks;
 };

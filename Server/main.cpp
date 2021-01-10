@@ -8,6 +8,7 @@ using namespace std;
 int main()
 {
 	Server server;
+	server.maxClients = 4;
 	server.SetupListenSocket();
 	server.StartListeningThread();
 
@@ -27,7 +28,6 @@ int main()
 			// update the client that is trying to join the server
 			if (dataType == 'J')
 			{
-				
 				vector<GameObject*> tanks = arena.GetAllObjectsOfType(typeid(Tank));
 
 				for (int i = 0; i < tanks.size(); ++i)
@@ -42,8 +42,15 @@ int main()
 					mat3 transform = tanks[i]->GetLocalTransform();
 					setTransform.StoreData(transform);
 
+					Packet setColour;
+					setColour.dataType = 'c';
+					setColour.objectID = tanks[i]->GetObjectID();
+					Tank::Colour colour = dynamic_cast<Tank*>(tanks[i])->GetColour();
+					setColour.StoreData(colour);
+
 					server.SendPacket(sender, spawnObject);
 					server.SendPacket(sender, setTransform);
+					server.SendPacket(sender, setColour);
 				}
 			}
 			// spawn a new tank
@@ -51,8 +58,10 @@ int main()
 			{
 				Tank* newTank = new Tank();
 				newTank->SetObjectID(objectID);
+				newTank->SetColour(arena.GetRandomTankColour(true), false);
 				arena.SpawnObject(newTank, arena.GetRandomLocation());
 				mat3 transform = newTank->GetLocalTransform();
+				Tank::Colour colour = newTank->GetColour();
 
 				Packet spawnTank;
 				spawnTank.dataType = 'T';
@@ -62,6 +71,11 @@ int main()
 				setTransform.dataType = 't';
 				setTransform.objectID = spawnTank.objectID;
 				setTransform.StoreData(transform);
+
+				Packet setColour;
+				setColour.dataType = 'c';
+				setColour.objectID = spawnTank.objectID;
+				setColour.StoreData(colour);
 
 				// send packets containing the tank data
 				for (int i = 1; i < server.clients.fd_count; ++i)
@@ -79,6 +93,7 @@ int main()
 					}
 					
 					server.SendPacket(server.clients.fd_array[i], setTransform);
+					server.SendPacket(server.clients.fd_array[i], setColour);
 				}
 			}
 			// move a tank forward or backward

@@ -4,9 +4,34 @@
 
 using namespace aie;
 
-Tank::Tank()
+Tank::Colour Tank::GetColour()
 {
-	LoadTexture("./textures/tankGreen.png");
+	return colour;
+}
+
+void Tank::SetColour(Colour colour, bool loadTexture)
+{
+	this->colour = colour;
+
+	if (loadTexture)
+	{
+		if (colour == Colour::GREEN)
+		{
+			LoadTexture("./textures/tankGreen.png");
+		}
+		else if (colour == Colour::BLUE)
+		{
+			LoadTexture("./textures/tankBlue.png");
+		}
+		else if (colour == Colour::ORANGE)
+		{
+			LoadTexture("./textures/tankOrange.png");
+		}
+		else if (colour == Colour::GRAY)
+		{
+			LoadTexture("./textures/tankGray.png");
+		}
+	}
 }
 
 void Tank::Update(float deltaTime)

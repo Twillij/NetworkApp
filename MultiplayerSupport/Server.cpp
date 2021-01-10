@@ -91,7 +91,7 @@ void Server::SetupListenSocket()
 
 void Server::ListenToClients()
 {
-	while (clients.fd_count < maxClients)
+	while (clients.fd_count <= maxClients + 1)
 	{
 		// create a temp client socket list for filtering
 		fd_set temp = clients;

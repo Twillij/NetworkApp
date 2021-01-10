@@ -2,6 +2,14 @@
 #include "Tank.h"
 #include <time.h>
 
+Arena::Arena()
+{
+	availableTanks.push_back(Tank::Colour::GREEN);
+	availableTanks.push_back(Tank::Colour::BLUE);
+	availableTanks.push_back(Tank::Colour::ORANGE);
+	availableTanks.push_back(Tank::Colour::GRAY);
+}
+
 Arena::~Arena()
 {
 	if (client)
@@ -20,6 +28,18 @@ vec3 Arena::GetRandomLocation()
 	return location;
 }
 
+Tank::Colour Arena::GetRandomTankColour(bool removeColour)
+{
+	srand(time(NULL));
+	int index = rand() % availableTanks.size();
+	Tank::Colour result = availableTanks[index];
+
+	if (removeColour)
+		availableTanks.erase(availableTanks.begin() + index);
+
+	return result;
+}
+
 void Arena::JoinServer()
 {
 	if (!client)
@@ -29,10 +49,15 @@ void Arena::JoinServer()
 		client->ConnectToServer();
 		client->StartServerThread();
 
+		// request to join server
+		Packet joinServer;
+		joinServer.dataType = 'J';
+		client->SendPacket(joinServer);
+
 		// request to create new tank
-		Packet packet;
-		packet.dataType = 'T';
-		client->SendPacket(packet);
+		Packet createTank;
+		createTank.dataType = 'T';
+		client->SendPacket(createTank);
 	}
 }
 
@@ -40,17 +65,16 @@ void Arena::Update(float deltaTime)
 {
 	while (client->unprocessedPackets.size() > 0)
 	{
-		cout << "processing packet" << endl;
 		Packet currentPacket = client->unprocessedPackets[0];
 
 		if (currentPacket.dataType == 'T')
 		{
 			Tank* newTank = new Tank();
+			currentPacket.ExtractData(newTank->isPlayerControlled);
 
-			if (!player)
+			if (!player && newTank->isPlayerControlled)
 			{
 				player = newTank;
-				newTank->isPlayerControlled = true;
 			}
 
 			newTank->SetObjectID(currentPacket.objectID);

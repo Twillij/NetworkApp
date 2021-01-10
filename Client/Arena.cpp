@@ -2,6 +2,14 @@
 #include "Tank.h"
 #include <time.h>
 
+Arena::Arena()
+{
+	availableTanks.push_back(Tank::Colour::GREEN);
+	availableTanks.push_back(Tank::Colour::BLUE);
+	availableTanks.push_back(Tank::Colour::ORANGE);
+	availableTanks.push_back(Tank::Colour::GRAY);
+}
+
 Arena::~Arena()
 {
 	if (client)
@@ -18,6 +26,18 @@ vec3 Arena::GetRandomLocation()
 	location.z = (borders.z) ? rand() % (int)borders.z : 0;
 
 	return location;
+}
+
+Tank::Colour Arena::GetRandomTankColour(bool removeColour)
+{
+	srand(time(NULL));
+	int index = rand() % availableTanks.size();
+	Tank::Colour result = availableTanks[index];
+
+	if (removeColour)
+		availableTanks.erase(availableTanks.begin() + index);
+
+	return result;
 }
 
 void Arena::JoinServer()
@@ -69,6 +89,15 @@ void Arena::Update(float deltaTime)
 
 			if (targetObject)
 				targetObject->SetLocalTransform(transform);
+		}
+		else if (currentPacket.dataType == 'c')
+		{
+			Tank::Colour colour;
+			currentPacket.ExtractData(colour);
+			Tank* targetObject = dynamic_cast<Tank*>(GetWorldObject(currentPacket.objectID));
+
+			if (targetObject)
+				targetObject->SetColour(colour);
 		}
 		else
 		{

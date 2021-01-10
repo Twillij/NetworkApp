@@ -4,12 +4,26 @@
 class Tank : public GameObject
 {
 public:
-	Tank();
+	Tank() {}
 	~Tank() {}
 
-	bool isPlayerControlled = false;
+	enum class Colour
+	{
+		GREEN,
+		BLUE,
+		ORANGE,
+		GRAY
+	};
 
-	float moveSpeed = 10;
+	bool isPlayerControlled = false;
+	float moveSpeed = 150;
+	float turnSpeed = 100;
+
+	Colour GetColour();
+	void SetColour(Colour colour, bool loadTexture = true);
 
 	virtual void Update(float deltaTime);
+
+private:
+	Colour colour;
 };
