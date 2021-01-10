@@ -82,7 +82,14 @@ void GameObject::LoadTexture(const char* filename)
 
 void GameObject::Translate(vec3 translation)
 {
-	localTransform = translate(localTransform, vec2(translation));
+	localTransform[2] = localTransform[2] + translation;
+	UpdateTransform();
+}
+
+void GameObject::Rotate(float deg)
+{
+	float rad = 2 * acosf(0) / 180 * deg;
+	localTransform = rotate(localTransform, rad);
 	UpdateTransform();
 }
 

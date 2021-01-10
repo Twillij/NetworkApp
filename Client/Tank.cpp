@@ -45,5 +45,33 @@ void Tank::Update(float deltaTime)
 				client->SendPacket(moveBackward);
 			}
 		}
+
+		if (input->isKeyDown(INPUT_KEY_A))
+		{
+			float angle = turnSpeed * deltaTime;
+
+			if (client)
+			{
+				Packet rotateLeft;
+				rotateLeft.dataType = 'a';
+				rotateLeft.objectID = GetObjectID();
+				rotateLeft.StoreData(angle);
+				client->SendPacket(rotateLeft);
+			}
+		}
+
+		if (input->isKeyDown(INPUT_KEY_D))
+		{
+			float angle = -turnSpeed * deltaTime;
+
+			if (client)
+			{
+				Packet rotateRight;
+				rotateRight.dataType = 'd';
+				rotateRight.objectID = GetObjectID();
+				rotateRight.StoreData(angle);
+				client->SendPacket(rotateRight);
+			}
+		}
 	}
 }

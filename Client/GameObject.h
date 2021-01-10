@@ -40,6 +40,7 @@ public:
 
 	void LoadTexture(const char* filename);
 	void Translate(vec3 translation);
+	void Rotate(float deg);
 
 	virtual void Update(float deltaTime) {}
 	virtual void Draw(Renderer2D* renderer);

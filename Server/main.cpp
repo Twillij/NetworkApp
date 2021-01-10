@@ -105,6 +105,30 @@ int main()
 					}
 				}
 			}
+			// rotate a tank left or right
+			else if (dataType == 'a' || dataType == 'd')
+			{
+				Tank* tank = dynamic_cast<Tank*>(arena.GetWorldObject(currentPacket.objectID));
+
+				if (tank)
+				{
+					float angle;
+					currentPacket.ExtractData(angle);
+					tank->Rotate(angle);
+					mat3 transform = tank->GetLocalTransform();
+
+					Packet setTransform;
+					setTransform.dataType = 't';
+					setTransform.objectID = currentPacket.objectID;
+					setTransform.StoreData(transform);
+
+					// send packets containing the tank data
+					for (int i = 1; i < server.clients.fd_count; ++i)
+					{
+						server.SendPacket(server.clients.fd_array[i], setTransform);
+					}
+				}
+			}
 			// shut down server
 			else if (dataType == 'x')
 			{
