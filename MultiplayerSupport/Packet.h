@@ -14,12 +14,15 @@ public:
 	unsigned int senderID = 0;
 	unsigned int objectID = 0;
 
+	// Stores data from the passed reference
 	template <class T>
 	void StoreData(T& a_data);
 
+	// Extracts data to the passed reference
 	template <class T>
 	void ExtractData(T& dataContainer);
 
+	// Clears any stored data
 	void ClearData();
 
 private:

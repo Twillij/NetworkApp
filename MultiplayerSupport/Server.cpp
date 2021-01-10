@@ -27,7 +27,7 @@ Server::Server()
 Server::~Server()
 {
 	for (int i = 0; i < clients.fd_count; ++i)
-		closesocket(clients.fd_array[i]);
+		shutdown(clients.fd_array[i], SD_SEND);
 
 	WSACleanup(); // used to terminate the use of ws2_32.dll
 }
@@ -171,7 +171,7 @@ bool Server::SendPacket(SOCKET& recipient, Packet& packet)
 	{
 		cout << "Packet sending failed: " << WSAGetLastError() << endl;
 		listenSocket = INVALID_SOCKET;
-		exit(EXIT_FAILURE);
+		return false;
 	}
 
 	return true;
@@ -196,9 +196,7 @@ bool Server::ReceivePacket(SOCKET& sender, Packet& packet)
 	}
 	else
 	{
-		cout << "Packet receiving failed: %d\n", WSAGetLastError();
+		cout << "Packet receiving failed: " << WSAGetLastError() << endl;
 		return false;
 	}
-
-	return false;
 }

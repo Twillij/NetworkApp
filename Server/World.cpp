@@ -32,12 +32,8 @@ vector<GameObject*> World::GetAllObjectsOfType(const type_info& objectType)
 	vector<GameObject*> result;
 
 	for (int i = 0; i < worldObjects.size(); ++i)
-	{
-		if (typeid(*worldObjects[i]) == objectType)
-		{
+		if (typeid(worldObjects[i]) == objectType)
 			result.push_back(worldObjects[i]);
-		}
-	}
 
 	return result;
 }

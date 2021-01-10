@@ -24,18 +24,28 @@ public:
 
 	deque<Packet> unprocessedPackets;
 
-	///<summary>Initializes winsock.
-	///Returns true if initialization succeeds, or false otherwise.</summary>
+	// Initializes winsock. Returns true if initialization succeeds, or false otherwise.
 	static bool InitializeWinsock();
 
+	// Sets up a listening socket for clients
 	void SetupListenSocket();
+
+	// Uses the listening socket to listen to clients on a loop
 	void ListenToClients();
+
+	// Starts a thread for listening to clients
 	void StartListeningThread();
+
+	// Handles the passed socket as a new client connection
 	void HandleNewClient(SOCKET newClient);
 
+	// Returns a socket with a matching ID from the socket list, or an invalid socket otherwise
 	SOCKET GetSocket(unsigned int socketID);
 
+	// Sends a packet through the given socket
 	bool SendPacket(SOCKET& recipient, Packet& packet);
+
+	// Receives a packet through the given socket
 	bool ReceivePacket(SOCKET& sender, Packet& packet);
 
 private:

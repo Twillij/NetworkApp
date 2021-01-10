@@ -13,12 +13,7 @@ Arena::Arena()
 Arena::~Arena()
 {
 	if (client)
-	{
-		Packet goOffline;
-		goOffline.dataType = 'x';
-		client->SendPacket(goOffline);
 		delete client;
-	}
 }
 
 vec3 Arena::GetRandomLocation()
@@ -72,6 +67,7 @@ void Arena::Update(float deltaTime)
 	{
 		Packet currentPacket = client->unprocessedPackets[0];
 
+		// create a new tank
 		if (currentPacket.dataType == 'T')
 		{
 			Tank* newTank = new Tank();
@@ -86,6 +82,7 @@ void Arena::Update(float deltaTime)
 			newTank->SetClient(client);
 			SpawnObject(newTank);
 		}
+		// update the transform of an object
 		else if (currentPacket.dataType == 't')
 		{
 			mat3 transform;
@@ -95,6 +92,7 @@ void Arena::Update(float deltaTime)
 			if (targetObject)
 				targetObject->SetLocalTransform(transform);
 		}
+		// set the colour of a tank
 		else if (currentPacket.dataType == 'c')
 		{
 			Tank::Colour colour;
@@ -109,6 +107,7 @@ void Arena::Update(float deltaTime)
 			cout << "Invalid data type" << endl;
 		}
 
+		// remove the now processed packet from the list
 		client->unprocessedPackets.pop_front();
 	}
 

@@ -15,7 +15,7 @@ Client::Client()
 Client::~Client()
 {
 	if (connectSocket != SOCKET_ERROR)
-		closesocket(connectSocket);
+		shutdown(connectSocket, SD_SEND);
 
 	WSACleanup(); // used to terminate the use of ws2_32.dll
 }
@@ -109,7 +109,7 @@ bool Client::SendPacket(Packet& packet)
 	{
 		cout << "Packet sending failed: " << WSAGetLastError() << endl;
 		connectSocket = INVALID_SOCKET;
-		exit(EXIT_FAILURE);
+		return false;
 	}
 
 	return true;
@@ -137,6 +137,4 @@ bool Client::ReceivePacket()
 		cout << "Packet receiving failed: " << WSAGetLastError() << endl;
 		return false;
 	}
-
-	return false;
 }
