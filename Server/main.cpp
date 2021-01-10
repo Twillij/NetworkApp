@@ -147,7 +147,14 @@ int main()
 			// shut down server
 			else if (dataType == 'x')
 			{
-				online = false;
+				for (int i = 1; i < server.clients.fd_count; ++i)
+				{
+					SOCKET client = server.clients.fd_array[i];
+					if (client == sender)
+					{
+						server.clients.fd_array;
+					}
+				}
 			}
 			else
 			{

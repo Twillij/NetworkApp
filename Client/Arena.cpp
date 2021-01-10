@@ -13,7 +13,12 @@ Arena::Arena()
 Arena::~Arena()
 {
 	if (client)
+	{
+		Packet goOffline;
+		goOffline.dataType = 'x';
+		client->SendPacket(goOffline);
 		delete client;
+	}
 }
 
 vec3 Arena::GetRandomLocation()

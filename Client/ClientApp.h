@@ -24,7 +24,6 @@ protected:
 
 	Renderer2D*	renderer;
 	Font* font;
-	Client* client;
 	vector<World*> worlds;
 	World* currentWorld = nullptr;
 };

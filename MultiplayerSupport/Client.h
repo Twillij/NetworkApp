@@ -17,7 +17,7 @@ public:
 	Client();
 	~Client();
 
-	const char* serverAddress = "localhost";
+	const char* serverAddress = "192.168.0.56";
 	const char* serverPort = "27015";
 
 	SOCKET connectSocket = INVALID_SOCKET;

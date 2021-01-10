@@ -30,7 +30,6 @@ void ClientApp::shutdown()
 {
 	delete font;
 	delete renderer;
-	//delete client;
 
 	for (int i = 0; i < worlds.size(); ++i)
 		delete worlds[i];
@@ -41,14 +40,6 @@ void ClientApp::update(float deltaTime)
 	Input* input = Input::getInstance();
 
 	currentWorld->Update(deltaTime);
-
-	if (input->isKeyDown(INPUT_KEY_SPACE))
-	{
-		int num = 420;
-		Packet packet;
-		packet.StoreData(num);
-		client->SendPacket(packet);
-	}
 	
 	// exit the application
 	if (input->isKeyDown(INPUT_KEY_ESCAPE))
