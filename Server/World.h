@@ -19,7 +19,9 @@ public:
 	int GetObjectCount();
 	GameObject* GetObjectList();
 	GameObject* GetWorldObject(unsigned int id);
-	vector<GameObject*> GetAllObjectsOfType(const type_info& objectType);
+
+	template <class T>
+	vector<GameObject*> GetAllObjectsOfType(T* objectPtr);
 
 	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
 
@@ -29,3 +31,15 @@ public:
 private:
 	vector<GameObject*> worldObjects;
 };
+
+template<class T>
+inline vector<GameObject*> World::GetAllObjectsOfType(T* objectPtr)
+{
+	vector<GameObject*> result;
+
+	for (int i = 0; i < worldObjects.size(); ++i)
+		if (dynamic_cast<T*>(worldObjects[i]))
+			result.push_back(worldObjects[i]);
+
+	return result;
+}

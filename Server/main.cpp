@@ -28,7 +28,8 @@ int main()
 			// update the client that is trying to join the server
 			if (dataType == 'J')
 			{
-				vector<GameObject*> tanks = arena.GetAllObjectsOfType(typeid(Tank));
+				Tank* t = nullptr;
+				vector<GameObject*> tanks = arena.GetAllObjectsOfType(t);
 
 				for (int i = 0; i < tanks.size(); ++i)
 				{
