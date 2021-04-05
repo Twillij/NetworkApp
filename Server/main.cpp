@@ -1,7 +1,7 @@
-#include "Server.h"
 #include "Tank.h"
 #include "Arena.h"
 #include <iostream>
+#include <Server.h>
 
 using namespace std;
 
