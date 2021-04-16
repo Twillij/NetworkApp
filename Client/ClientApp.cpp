@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "Input.h"
 #include "Arena.h"
+#include "ClientStartScreen.h"
 
 ClientApp::ClientApp()
 {
@@ -18,8 +19,10 @@ bool ClientApp::startup()
 	font = new Font("./font/consolas.ttf", 32);
 
 	// world setup
+	ClientStartScreen* startScreen = new ClientStartScreen();
+	worlds.push_back(startScreen);
 	Arena* arena = new Arena();
-	arena->JoinServer("192.168.0.56", "27015");
+	//arena->JoinServer("192.168.0.56", "27015");
 	worlds.push_back(arena);
 	currentWorld = worlds[0];
 
