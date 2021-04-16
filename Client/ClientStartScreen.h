@@ -23,6 +23,9 @@ public:
 
 	TextBox* currentTextBox = nullptr;
 
+	World* nextWorld = nullptr;
+	World** currentWorld = nullptr;
+
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(Renderer2D* renderer, Font* font) override;
 };

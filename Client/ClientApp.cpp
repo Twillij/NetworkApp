@@ -18,13 +18,18 @@ bool ClientApp::startup()
 	renderer = new Renderer2D();
 	font = new Font("./font/consolas.ttf", 32);
 
-	// world setup
-	ClientStartScreen* startScreen = new ClientStartScreen();
-	worlds.push_back(startScreen);
+	// arena setup
 	Arena* arena = new Arena();
-	//arena->JoinServer("192.168.0.56", "27015");
 	worlds.push_back(arena);
-	currentWorld = worlds[0];
+
+	// start screen setup
+	ClientStartScreen* startScreen = new ClientStartScreen();
+	startScreen->currentWorld = &currentWorld;
+	startScreen->nextWorld = arena;
+	worlds.push_back(startScreen);
+
+	// set the initial world as the start screen
+	currentWorld = startScreen;
 
 	return true;
 }
@@ -42,6 +47,7 @@ void ClientApp::update(float deltaTime)
 {
 	Input* input = Input::getInstance();
 
+	// update the current world
 	currentWorld->Update(deltaTime);
 	
 	// exit the application
