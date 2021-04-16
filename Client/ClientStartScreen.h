@@ -19,6 +19,7 @@ public:
 
 	TextBox serverAddrBox;
 	TextBox serverPortBox;
+	TextBox confirmButton;
 
 	TextBox* currentTextBox = nullptr;
 
