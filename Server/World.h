@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
 #include <typeinfo>
+#include <Font.h>
 #include <Renderer2D.h>
 #include <glm/vec3.hpp>
 
+using aie::Font;
 using aie::Renderer2D;
 using glm::vec3;
 using std::vector;
@@ -26,7 +28,7 @@ public:
 	void SpawnObject(GameObject* newObject, vec3 location = vec3(0));
 
 	virtual void Update(float deltaTime);
-	virtual void Draw(Renderer2D* renderer);
+	virtual void Draw(Renderer2D* renderer, Font* font);
 
 private:
 	vector<GameObject*> worldObjects;
