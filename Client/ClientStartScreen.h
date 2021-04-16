@@ -12,13 +12,16 @@ public:
 
 	struct TextBox
 	{
-		vec2 position;
-		vec2 extents;
-		const char* text;
+		vec2 pos = { 0, 0 };
+		vec2 extents = { 1, 1 };
+		char text[40] = "";
 	};
 
 	TextBox serverAddrBox;
 	TextBox serverPortBox;
 
+	TextBox* currentTextBox = nullptr;
+
+	virtual void Update(float deltaTime) override;
 	virtual void Draw(Renderer2D* renderer, Font* font) override;
 };
