@@ -42,7 +42,7 @@ void World::Update(float deltaTime)
 		worldObjects[i]->Update(deltaTime);
 }
 
-void World::Draw(Renderer2D* renderer)
+void World::Draw(Renderer2D* renderer, Font* font)
 {
 	for (int i = 0; i < worldObjects.size(); ++i)
 		worldObjects[i]->Draw(renderer);

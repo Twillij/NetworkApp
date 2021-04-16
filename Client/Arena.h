@@ -17,7 +17,7 @@ public:
 	vec3 GetRandomLocation();
 	Tank::Colour GetRandomTankColour(bool removeColour = false);
 
-	void JoinServer();
+	void JoinServer(const char* serverAddress, const char* serverPort);
 
 	virtual void Update(float deltaTime);
 

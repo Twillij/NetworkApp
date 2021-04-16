@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClCompile Include="Arena.cpp" />
     <ClCompile Include="ClientApp.cpp" />
+    <ClCompile Include="ClientStartScreen.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -180,6 +181,7 @@
   <ItemGroup>
     <ClInclude Include="Arena.h" />
     <ClInclude Include="ClientApp.h" />
+    <ClInclude Include="ClientStartScreen.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="World.h" />

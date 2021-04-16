@@ -45,6 +45,9 @@
     <ClCompile Include="Arena.cpp">
       <Filter>Source Files\Worlds</Filter>
     </ClCompile>
+    <ClCompile Include="ClientStartScreen.cpp">
+      <Filter>Source Files\Worlds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientApp.h">
@@ -60,6 +63,9 @@
       <Filter>Header Files\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Arena.h">
+      <Filter>Header Files\Worlds</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStartScreen.h">
       <Filter>Header Files\Worlds</Filter>
     </ClInclude>
   </ItemGroup>

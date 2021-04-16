@@ -95,7 +95,8 @@ void GameObject::Rotate(float deg)
 
 void GameObject::Draw(Renderer2D* renderer)
 {
-	renderer->drawSpriteTransformed3x3(texture, &globalTransform[0][0]);
+	if (renderer)
+		renderer->drawSpriteTransformed3x3(texture, &globalTransform[0][0]);
 }
 
 void GameObject::UpdateTransform()

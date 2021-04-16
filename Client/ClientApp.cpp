@@ -16,10 +16,10 @@ bool ClientApp::startup()
 {
 	renderer = new Renderer2D();
 	font = new Font("./font/consolas.ttf", 32);
-	
+
 	// world setup
 	Arena* arena = new Arena();
-	arena->JoinServer();
+	arena->JoinServer("192.168.0.56", "27015");
 	worlds.push_back(arena);
 	currentWorld = worlds[0];
 
@@ -55,7 +55,7 @@ void ClientApp::draw()
 	renderer->begin();
 
 	// draw your stuff here!
-	currentWorld->Draw(renderer);
+	currentWorld->Draw(renderer, font);
 
 	// output some text, uses the last used colour
 	renderer->drawText(font, "Press ESC to quit", 0, 0);

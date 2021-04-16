@@ -40,12 +40,14 @@ Tank::Colour Arena::GetRandomTankColour(bool removeColour)
 	return result;
 }
 
-void Arena::JoinServer()
+void Arena::JoinServer(const char* serverAddress, const char* serverPort)
 {
 	if (!client)
 	{
 		// client setup
 		client = new Client();
+		client->serverAddress = serverAddress;
+		client->serverPort = serverPort;
 		client->ConnectToServer();
 		client->StartServerThread();
 
